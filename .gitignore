@@ -1,0 +1,20 @@
+# gradle
+
+.gradle/
+build/
+out/
+classes/
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local files
+
+Referrences/
+*.ods
+*.ods#
+*.pdn
