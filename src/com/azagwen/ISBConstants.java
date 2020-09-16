@@ -5,18 +5,21 @@ import java.awt.*;
 
 public interface ISBConstants {
     JTextField console = new JTextField();
-    JTextField matTextBox = new JTextField();
-    JTextField toolFolderTextBox = new JTextField();
-    JTextField armorFolderTextBox = new JTextField();
-    JTextField namespaceTextBox = new JTextField();
-    JLabel matLabel = new JLabel("Material");
-    JLabel toolLabel = new JLabel("Tools texture folder name");
-    JLabel armorLabel = new JLabel("Armor items texture folder name");
-    JLabel namespaceLabel = new JLabel("Mod namespace");
+    JTextField matTextBox = new HintTextField("Material");
+    JTextField namespaceTextBox = new HintTextField("Mod namespace");
+    JTextField typeTextBox = new HintTextField("Ingredient type (ex: ingot)");
+    JTextField toolTextBox = new JTextField();
+    JTextField armorTextBox = new JTextField();
+    JTextField blockTextBox = new JTextField();
+    JLabel texLabel = new JLabel("Texture folders");
+    JLabel toolLabel = new JLabel("Tools :");
+    JLabel armorLabel = new JLabel("Armor items :");
+    JLabel blockLabel = new JLabel("Blocks :");
 
-    String namespace = (namespaceTextBox.getText().equals("") ? "minecraft" : namespaceTextBox.getText()) + ":";
-    String toolsFolder = (toolFolderTextBox.getText().equals("") ? "item" : toolFolderTextBox.getText()) + "/";
-    String armorFolder = (armorFolderTextBox.getText().equals("") ? "item" : armorFolderTextBox.getText()) + "/";
+    String namespace = (namespaceTextBox.getText().equals("") ? "minecraft" : namespaceTextBox.getText().toLowerCase()) + ":";
+    String toolsFolder = (toolTextBox.getText().equals("") ? "item" : toolTextBox.getText().toLowerCase()) + "/";
+    String armorFolder = (armorTextBox.getText().equals("") ? "item" : armorTextBox.getText().toLowerCase()) + "/";
+    String blocksFolder = (blockTextBox.getText().equals("") ? "block" : blockTextBox.getText().toLowerCase()) + "/";
 
     String[] itemType = {
             "_hoe",
@@ -27,8 +30,10 @@ public interface ISBConstants {
             "_helmet",
             "_chestplate",
             "_leggings",
-            "_boots"
-    };
+            "_boots",
+            "_block",
+            "_ore"
+    };      //10 elements (0-10)
 
     Color ISB_red = new Color(192, 64, 64);
     Color ISB_yellow = new Color(192, 192, 64);

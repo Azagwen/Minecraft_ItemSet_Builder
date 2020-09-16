@@ -1,6 +1,9 @@
 package com.azagwen;
 
-import org.json.JSONObject;
+import com.azagwen.builders.BlockModelBuilder;
+import com.azagwen.builders.BlockstateBuilder;
+import com.azagwen.builders.ItemModelBuilder;
+import com.azagwen.builders.RecipeDataBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,43 +28,60 @@ public class GUI implements ISBConstants {
         JPanel panel = new JPanel();
         JButton buildButton = new JButton("Build");
         Font font = new Font(null, Font.PLAIN, 24);
+        JTextField[] textFields = {matTextBox, namespaceTextBox, typeTextBox, toolTextBox, armorTextBox, blockTextBox};
+        JLabel[] labels = {toolLabel, armorLabel, texLabel, blockLabel};
 
-        toolFolderTextBox.addKeyListener(lengthLimit(10, toolFolderTextBox));
-        toolFolderTextBox.setFont(font);
-        toolLabel.setFont(font);
-        armorFolderTextBox.addKeyListener(lengthLimit(10, armorFolderTextBox));
-        armorFolderTextBox.setFont(font);
-        armorLabel.setFont(font);
-        matTextBox.addKeyListener(lengthLimit(10, matTextBox));
-        matTextBox.setFont(font);
-        matLabel.setFont(font);
-        namespaceTextBox.addKeyListener(lengthLimit(10, namespaceTextBox));
-        namespaceTextBox.setFont(font);
-        namespaceLabel.setFont(font);
+        for (int i = 0; i < textFields.length; i++) {
+            textFields[i].setFont(font);
+            if (i < 3) {
+                textFields[i].setMargin(new Insets(0, 20, 0, 0));
+                textFields[i].addKeyListener(lengthLimit(20, textFields[i]));
+            } else {
+                textFields[i].setHorizontalAlignment(SwingConstants.CENTER);
+                textFields[i].addKeyListener(lengthLimit(10, textFields[i]));
+            }
+        }
+        for (JLabel label : labels) {
+            label.setFont(font);
+        }
+
         pathButton.addActionListener(new SelectPath());
-        pathButton.setFont(font);
         buildButton.addActionListener(new BuildAction());
-        buildButton.setFont(font);
         console.setEditable(false);
-        console.setFont(font);
         console.setHorizontalAlignment(SwingConstants.CENTER);
 
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        pathButton.setFont(font);
+        console.setFont(font);
+        buildButton.setFont(font);
 
-        panel.add(matLabel, assignConstraint(0, 0, 1, 1, 0, new Insets(20, 20, 5, 5)));
-        panel.add(matTextBox, assignConstraint(1, 0, 1, 1, 240, new Insets(20, 5, 5, 20)));
-        panel.add(new JSeparator(), assignConstraint(0, 1, 2, 0.25F, 0, new Insets(0, 20, 5, 20)));
-        panel.add(toolLabel, assignConstraint(0, 2, 1, 1, 0, new Insets(0, 20, 5, 5)));
-        panel.add(toolFolderTextBox, assignConstraint(1, 2, 1, 1, 240, new Insets(0, 5, 5, 20)));
-        panel.add(armorLabel, assignConstraint(0, 3, 1, 1, 0, new Insets(0, 20, 5, 5)));
-        panel.add(armorFolderTextBox, assignConstraint(1, 3, 1, 1, 240, new Insets(0, 5, 5, 20)));
-        panel.add(namespaceLabel, assignConstraint(0, 4, 1, 1, 0, new Insets(0, 20, 5, 5)));
-        panel.add(namespaceTextBox, assignConstraint(1, 4, 1, 1, 240, new Insets(0, 5, 5, 20)));
-        panel.add(pathButton, assignConstraint(0, 5, 2, 1, 0, new Insets(0, 20, 5, 20)));
-        panel.add(new JSeparator(), assignConstraint(0, 6, 2, 0.25F, 0, new Insets(0, 20, 5, 20)));
-        panel.add(buildButton, assignConstraint(0, 7, 2, 1, 0, new Insets(0, 20, 5, 20)));
-        panel.add(console, assignConstraint(0, 8, 2, 1, 0, new Insets(0, 20, 20, 20)));
+        int thirdWidth = 175;
+
+        panel.setLayout(new GridBagLayout());
+//        panel.add(matLabel, assignConstraint(0, 0, 1, 1, 0, new Insets(20, 40, 5, 20)));
+        panel.add(matTextBox, assignConstraint(0, 0, 3, 1, 0, new Insets(20, 20, 5, 20)));
+
+        panel.add(new JSeparator(), assignConstraint(0, 1, 3, 0.25F, 0, new Insets(15, 20, 0, 20)));
+
+        panel.add(texLabel, assignConstraint(0, 2, 3, 1, 0, new Insets(0, 20, 0, 5)));
+        panel.add(toolLabel, assignConstraint(0, 3, 1, 1, 0, new Insets(0, 20, 0, 5)));
+        panel.add(armorLabel, assignConstraint(1, 3, 1, 1, 0, new Insets(0, 5, 0, 5)));
+        panel.add(blockLabel, assignConstraint(2, 3, 1, 1, 0, new Insets(0, 5, 0, 20)));
+        panel.add(toolTextBox, assignConstraint(0, 4, 1, 1, thirdWidth, new Insets(0, 20, 5, 5)));
+        panel.add(armorTextBox, assignConstraint(1, 4, 1, 1, thirdWidth, new Insets(0, 5, 5, 5)));
+        panel.add(blockTextBox, assignConstraint(2, 4, 1, 1, thirdWidth, new Insets(0, 5, 5, 20)));
+
+        panel.add(new JSeparator(), assignConstraint(0, 5, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
+
+//        panel.add(namespaceLabel, assignConstraint(0, 6, 1, 1, 0, new Insets(0, 40, 5, 5)));
+        panel.add(namespaceTextBox, assignConstraint(0, 6, 3, 1, 0, new Insets(0, 20, 5, 20)));
+//        panel.add(typeLabel, assignConstraint(0, 7, 1, 1, 0, new Insets(0, 40, 5, 20)));
+        panel.add(typeTextBox, assignConstraint(0, 7, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(pathButton, assignConstraint(0, 8, 3, 1, 0, new Insets(0, 20, 5, 20)));
+
+        panel.add(new JSeparator(), assignConstraint(0, 9, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
+
+        panel.add(buildButton, assignConstraint(0, 10, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(console, assignConstraint(0, 11, 3, 1, 0, new Insets(0, 20, 20, 20)));
 
         frame.setVisible(true);
         frame.add(panel);
@@ -99,8 +119,8 @@ public class GUI implements ISBConstants {
 
     private class BuildAction implements ActionListener {
         public void actionPerformed(ActionEvent actionEvent) {
-            if (!selectedDirectory.equals("")) {
-                if (!isFieldEmpty(matTextBox)) {
+            if (!isFieldEmpty(matTextBox)) {
+                if (!selectedDirectory.equals("")) {
                     File directory = new File(selectedDirectory + "\\ISB_output");
                     if (!directory.exists()) {
                         try {
@@ -111,15 +131,18 @@ public class GUI implements ISBConstants {
                     }
 
                     new RecipeDataBuilder(directory.getAbsolutePath());
-                    new ItemModelMaker(directory.getAbsolutePath());
+                    new ItemModelBuilder(directory.getAbsolutePath());
+                    new BlockModelBuilder(directory.getAbsolutePath());
+                    new BlockstateBuilder(directory.getAbsolutePath());
                 } else {
-                    console.setText("\"Material\" must be filled.");
-                    GUI.delayedConsoleMSG("", 2);
+                    console.setForeground(ISB_red);
+                    console.setText("Please select an output directory.");
+                    delayedConsoleMSG("", 2);
                 }
             } else {
                 console.setForeground(ISB_red);
-                console.setText("Please select an output directory.");
-                delayedConsoleMSG("", 2);
+                console.setText("\"Material\" must be filled.");
+                GUI.delayedConsoleMSG("", 2);
             }
         }
     }

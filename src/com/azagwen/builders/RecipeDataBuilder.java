@@ -1,8 +1,11 @@
-package com.azagwen;
+package com.azagwen.builders;
 
+import com.azagwen.ISBConstants;
+import com.azagwen.ISBFileWriter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -18,9 +21,10 @@ public class RecipeDataBuilder implements ISBConstants {
         JSONObject oreMap = new JSONObject();
         JSONObject stickMap = new JSONObject();
         JSONObject resultMap = new JSONObject();
-        String material = matTextBox.getText();
+        String material = matTextBox.getText().toLowerCase();
+        String type = "_" + typeTextBox.getText();
 
-        oreMap.put("M", namespace + material);
+        oreMap.put("M", namespace + material + (isFieldEmpty(typeTextBox) ? "" : type));
         stickMap.put("S", "minecraft:stick");
 
         makeObjOrdered(mainMap);
@@ -51,7 +55,8 @@ public class RecipeDataBuilder implements ISBConstants {
                     e.printStackTrace();
                 }
             }
-            new ISBFileWriter(directory.getAbsolutePath(), mainMap, i, itemType);
+            if (i != 10)
+            new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
         }
     }
 
@@ -65,6 +70,7 @@ public class RecipeDataBuilder implements ISBConstants {
         JSONArray chestplate = new JSONArray();
         JSONArray leggings = new JSONArray();
         JSONArray boots = new JSONArray();
+        JSONArray block = new JSONArray();
 
         hoe.put("MM");
         hoe.put(" S");
@@ -81,6 +87,7 @@ public class RecipeDataBuilder implements ISBConstants {
         sword.put("M");
         sword.put("S");
         sword.put("S");
+
         helmet.put("MMM");
         helmet.put("M M");
         chestplate.put("M M");
@@ -91,6 +98,10 @@ public class RecipeDataBuilder implements ISBConstants {
         leggings.put("M M");
         boots.put("M M");
         boots.put("M M");
+
+        block.put("MMM");
+        block.put("MMM");
+        block.put("MMM");
 
         switch (iteration) {
             case 0:
@@ -111,7 +122,10 @@ public class RecipeDataBuilder implements ISBConstants {
                 return leggings;
             case 8:
                 return boots;
+            case 9:
+                return block;
             default:
+                System.out.println("empty array created");
                 return new JSONArray();
         }
     }
@@ -125,5 +139,9 @@ public class RecipeDataBuilder implements ISBConstants {
         } catch (IllegalAccessException | NoSuchFieldException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static boolean isFieldEmpty(JTextField field) {
+        return field.getText().equals("");
     }
 }
