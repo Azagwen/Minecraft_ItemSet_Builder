@@ -2,7 +2,7 @@
 
 Application that creates recipes and item models for Minecraft 1.16.X mods
 
-####The app will ask for :
+#### The app will ask for :
 
 - A Material (ex: iron, gold...). 
 - A tools, armor items and block texture folders **name**.
