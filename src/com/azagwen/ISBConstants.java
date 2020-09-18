@@ -13,11 +13,6 @@ public interface ISBConstants {
     JTextField blockTextBox = new HintTextField("Blocks");
     JLabel texLabel = new JLabel("Texture folders: ");
 
-    String namespace = (namespaceTextBox.getText().equals("") ? "minecraft" : namespaceTextBox.getText().toLowerCase()) + ":";
-    String toolsFolder = (toolTextBox.getText().equals("") ? "item" : toolTextBox.getText().toLowerCase()) + "/";
-    String armorFolder = (armorTextBox.getText().equals("") ? "item" : armorTextBox.getText().toLowerCase()) + "/";
-    String blocksFolder = (blockTextBox.getText().equals("") ? "block" : blockTextBox.getText().toLowerCase()) + "/";
-
     String[] itemType = {
             "_hoe",
             "_shovel",

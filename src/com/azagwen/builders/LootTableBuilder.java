@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 
 public class LootTableBuilder implements ISBConstants {
 
-    public LootTableBuilder(String path) {
+    public LootTableBuilder(String path, String namespace) {
         JSONObject mainMap = new JSONObject();
         JSONObject poolMap = new JSONObject();
         JSONObject entryMap = new JSONObject();

@@ -9,7 +9,7 @@ import java.io.*;
 
 public class ItemModelBuilder implements ISBConstants {
 
-    public ItemModelBuilder(String path) {
+    public ItemModelBuilder(String path, String namespace, String toolsFolder, String armorFolder, String blocksFolder) {
         JSONObject mainMap = new JSONObject();
         JSONObject textureMap = new JSONObject();
         String material = matTextBox.getText().toLowerCase();

@@ -8,7 +8,7 @@ import java.io.File;
 
 public class BlockstateBuilder implements ISBConstants {
 
-    public BlockstateBuilder(String path) {
+    public BlockstateBuilder(String path, String namespace) {
         JSONObject mainMap = new JSONObject();
         JSONObject modelMap = new JSONObject();
         JSONObject variantMap = new JSONObject();

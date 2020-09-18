@@ -117,11 +117,16 @@ public class GUI implements ISBConstants {
                         }
                     }
 
-                    new RecipeDataBuilder(directory.getAbsolutePath());
-                    new ItemModelBuilder(directory.getAbsolutePath());
-                    new BlockModelBuilder(directory.getAbsolutePath());
-                    new BlockstateBuilder(directory.getAbsolutePath());
-                    new LootTableBuilder(directory.getAbsolutePath());
+                    String namespace = (namespaceTextBox.getText().equals("") ? "minecraft" : namespaceTextBox.getText().toLowerCase()) + ":";
+                    String toolsFolder = (toolTextBox.getText().equals("") ? "item" : toolTextBox.getText().toLowerCase()) + "/";
+                    String armorFolder = (armorTextBox.getText().equals("") ? "item" : armorTextBox.getText().toLowerCase()) + "/";
+                    String blocksFolder = (blockTextBox.getText().equals("") ? "block" : blockTextBox.getText().toLowerCase()) + "/";
+
+                    new RecipeDataBuilder(directory.getAbsolutePath(), namespace);
+                    new LootTableBuilder(directory.getAbsolutePath(), namespace);
+                    new BlockstateBuilder(directory.getAbsolutePath(), namespace);
+                    new BlockModelBuilder(directory.getAbsolutePath(), namespace, blocksFolder);
+                    new ItemModelBuilder(directory.getAbsolutePath(), namespace, toolsFolder, armorFolder, blocksFolder);
                 } else {
                     console.setForeground(ISB_red);
                     console.setText("Please select an output directory.");

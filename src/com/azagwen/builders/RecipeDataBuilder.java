@@ -12,7 +12,7 @@ import java.util.*;
 
 public class RecipeDataBuilder implements ISBConstants {
 
-    public RecipeDataBuilder(String path) {
+    public RecipeDataBuilder(String path, String namespace) {
         JSONObject mainMap = new JSONObject();
         JSONObject keyMap = new JSONObject();
         JSONObject oreMap = new JSONObject();

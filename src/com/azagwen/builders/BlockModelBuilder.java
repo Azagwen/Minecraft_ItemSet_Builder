@@ -8,7 +8,7 @@ import java.io.File;
 
 public class BlockModelBuilder implements ISBConstants {
 
-    public BlockModelBuilder(String path) {
+    public BlockModelBuilder(String path, String namespace, String blocksFolder) {
         JSONObject mainMap = new JSONObject();
         JSONObject textureMap = new JSONObject();
         String material = matTextBox.getText().toLowerCase();
