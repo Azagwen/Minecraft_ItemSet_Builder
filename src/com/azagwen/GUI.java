@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GUI implements ISBConstants {
-    private String version = "1.2.0";
+    private String version = "1.2.3";
     private JFrame frame = new JFrame("Minecraft Item Set Builder - V" + version);
     private JButton pathButton = new JButton("Select output Folder");
     private String selectedDirectory = "";
@@ -55,7 +55,7 @@ public class GUI implements ISBConstants {
         panel.add(new JSeparator(), assignConstraint(0, 1, 3, 0.25F, 0, new Insets(15, 20, 0, 20)));
 
         panel.add(texLabel, assignConstraint(0, 2, 3, 1, 0, new Insets(0, 20, 0, 5)));
-          panel.add(toolTextBox, assignConstraint(0, 3, 1, 1, thirdWidth, new Insets(0, 20, 5, 5)));
+        panel.add(toolTextBox, assignConstraint(0, 3, 1, 1, thirdWidth, new Insets(0, 20, 5, 5)));
         panel.add(armorTextBox, assignConstraint(1, 3, 1, 1, thirdWidth, new Insets(0, 5, 5, 5)));
         panel.add(blockTextBox, assignConstraint(2, 3, 1, 1, thirdWidth, new Insets(0, 5, 5, 20)));
 

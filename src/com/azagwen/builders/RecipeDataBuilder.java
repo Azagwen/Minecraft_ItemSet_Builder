@@ -98,15 +98,15 @@ public class RecipeDataBuilder implements ISBConstants {
         block.put("MMM");
 
         switch (iteration) {
-            case 1:
+            case 0:
                 return hoe;
-            case 2:
+            case 1:
                 return shovel;
-            case 3:
+            case 2:
                 return pickaxe;
-            case 4:
+            case 3:
                 return axe;
-            case 5:
+            case 4:
                 return sword;
             case 6:
                 return helmet;
