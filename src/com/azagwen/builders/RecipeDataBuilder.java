@@ -7,10 +7,7 @@ import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class RecipeDataBuilder implements ISBConstants {
@@ -33,7 +30,7 @@ public class RecipeDataBuilder implements ISBConstants {
         for (int i = 0; i < itemType.length; i++) {
             JSONArray currentPattern = setCurrentPattern(i);
 
-            if (i < 5) {
+            if (i < 6 && i != 5) {
                 keyMap.put("M", oreMap);
                 keyMap.put("S", stickMap);
             } else {
@@ -47,16 +44,13 @@ public class RecipeDataBuilder implements ISBConstants {
             mainMap.put("key", keyMap);
             mainMap.put("result", resultMap);
 
-            File directory = new File(path + "\\recipes");
+            File directory = new File(path + "\\recipes\\");
             if (!directory.exists()) {
-                try {
-                    Files.createDirectories(Paths.get(directory.toString()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                directory.mkdirs();
             }
-            if (i != 10)
-            new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+
+            if (i != 11 && i != 5)
+                new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
         }
     }
 
@@ -104,29 +98,29 @@ public class RecipeDataBuilder implements ISBConstants {
         block.put("MMM");
 
         switch (iteration) {
-            case 0:
-                return hoe;
             case 1:
-                return shovel;
+                return hoe;
             case 2:
-                return pickaxe;
+                return shovel;
             case 3:
-                return axe;
+                return pickaxe;
             case 4:
-                return sword;
+                return axe;
             case 5:
-                return helmet;
+                return sword;
             case 6:
-                return chestplate;
+                return helmet;
             case 7:
-                return leggings;
+                return chestplate;
             case 8:
-                return boots;
+                return leggings;
             case 9:
+                return boots;
+            case 10:
                 return block;
             default:
                 System.out.println("empty array created");
-                return new JSONArray();
+                return null;
         }
     }
 

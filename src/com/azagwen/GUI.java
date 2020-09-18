@@ -1,9 +1,6 @@
 package com.azagwen;
 
-import com.azagwen.builders.BlockModelBuilder;
-import com.azagwen.builders.BlockstateBuilder;
-import com.azagwen.builders.ItemModelBuilder;
-import com.azagwen.builders.RecipeDataBuilder;
+import com.azagwen.builders.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +17,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GUI implements ISBConstants {
-    private JFrame frame = new JFrame("Minecraft Item Set Builder");
+    private String version = "1.2.0";
+    private JFrame frame = new JFrame("Minecraft Item Set Builder - V" + version);
     private JButton pathButton = new JButton("Select output Folder");
     private String selectedDirectory = "";
 
@@ -29,17 +27,12 @@ public class GUI implements ISBConstants {
         JButton buildButton = new JButton("Build");
         Font font = new Font(null, Font.PLAIN, 24);
         JTextField[] textFields = {matTextBox, namespaceTextBox, typeTextBox, toolTextBox, armorTextBox, blockTextBox};
-        JLabel[] labels = {toolLabel, armorLabel, texLabel, blockLabel};
+        JLabel[] labels = {texLabel};
 
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].setFont(font);
-            if (i < 3) {
-                textFields[i].setMargin(new Insets(0, 20, 0, 0));
-                textFields[i].addKeyListener(lengthLimit(20, textFields[i]));
-            } else {
-                textFields[i].setHorizontalAlignment(SwingConstants.CENTER);
-                textFields[i].addKeyListener(lengthLimit(10, textFields[i]));
-            }
+            textFields[i].setMargin(new Insets(0, 20, 0, 0));
+            textFields[i].addKeyListener(lengthLimit(20, textFields[i]));
         }
         for (JLabel label : labels) {
             label.setFont(font);
@@ -57,31 +50,25 @@ public class GUI implements ISBConstants {
         int thirdWidth = 175;
 
         panel.setLayout(new GridBagLayout());
-//        panel.add(matLabel, assignConstraint(0, 0, 1, 1, 0, new Insets(20, 40, 5, 20)));
         panel.add(matTextBox, assignConstraint(0, 0, 3, 1, 0, new Insets(20, 20, 5, 20)));
 
         panel.add(new JSeparator(), assignConstraint(0, 1, 3, 0.25F, 0, new Insets(15, 20, 0, 20)));
 
         panel.add(texLabel, assignConstraint(0, 2, 3, 1, 0, new Insets(0, 20, 0, 5)));
-        panel.add(toolLabel, assignConstraint(0, 3, 1, 1, 0, new Insets(0, 20, 0, 5)));
-        panel.add(armorLabel, assignConstraint(1, 3, 1, 1, 0, new Insets(0, 5, 0, 5)));
-        panel.add(blockLabel, assignConstraint(2, 3, 1, 1, 0, new Insets(0, 5, 0, 20)));
-        panel.add(toolTextBox, assignConstraint(0, 4, 1, 1, thirdWidth, new Insets(0, 20, 5, 5)));
-        panel.add(armorTextBox, assignConstraint(1, 4, 1, 1, thirdWidth, new Insets(0, 5, 5, 5)));
-        panel.add(blockTextBox, assignConstraint(2, 4, 1, 1, thirdWidth, new Insets(0, 5, 5, 20)));
+          panel.add(toolTextBox, assignConstraint(0, 3, 1, 1, thirdWidth, new Insets(0, 20, 5, 5)));
+        panel.add(armorTextBox, assignConstraint(1, 3, 1, 1, thirdWidth, new Insets(0, 5, 5, 5)));
+        panel.add(blockTextBox, assignConstraint(2, 3, 1, 1, thirdWidth, new Insets(0, 5, 5, 20)));
 
-        panel.add(new JSeparator(), assignConstraint(0, 5, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
+        panel.add(new JSeparator(), assignConstraint(0, 4, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
 
-//        panel.add(namespaceLabel, assignConstraint(0, 6, 1, 1, 0, new Insets(0, 40, 5, 5)));
-        panel.add(namespaceTextBox, assignConstraint(0, 6, 3, 1, 0, new Insets(0, 20, 5, 20)));
-//        panel.add(typeLabel, assignConstraint(0, 7, 1, 1, 0, new Insets(0, 40, 5, 20)));
-        panel.add(typeTextBox, assignConstraint(0, 7, 3, 1, 0, new Insets(0, 20, 5, 20)));
-        panel.add(pathButton, assignConstraint(0, 8, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(namespaceTextBox, assignConstraint(0, 5, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(typeTextBox, assignConstraint(0, 6, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(pathButton, assignConstraint(0, 7, 3, 1, 0, new Insets(0, 20, 5, 20)));
 
-        panel.add(new JSeparator(), assignConstraint(0, 9, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
+        panel.add(new JSeparator(), assignConstraint(0, 8, 6, 0.25F, 0, new Insets(15, 20, 0, 20)));
 
-        panel.add(buildButton, assignConstraint(0, 10, 3, 1, 0, new Insets(0, 20, 5, 20)));
-        panel.add(console, assignConstraint(0, 11, 3, 1, 0, new Insets(0, 20, 20, 20)));
+        panel.add(buildButton, assignConstraint(0, 9, 3, 1, 0, new Insets(0, 20, 5, 20)));
+        panel.add(console, assignConstraint(0, 10, 3, 1, 0, new Insets(0, 20, 20, 20)));
 
         frame.setVisible(true);
         frame.add(panel);
@@ -134,6 +121,7 @@ public class GUI implements ISBConstants {
                     new ItemModelBuilder(directory.getAbsolutePath());
                     new BlockModelBuilder(directory.getAbsolutePath());
                     new BlockstateBuilder(directory.getAbsolutePath());
+                    new LootTableBuilder(directory.getAbsolutePath());
                 } else {
                     console.setForeground(ISB_red);
                     console.setText("Please select an output directory.");

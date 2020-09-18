@@ -6,8 +6,6 @@ import com.azagwen.ISBFileWriter;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class ItemModelBuilder implements ISBConstants {
 
@@ -20,10 +18,10 @@ public class ItemModelBuilder implements ISBConstants {
             String currentFolder = "";
             String modelParrent = "";
 
-            if (i < 5) {
+            if (i <= 5) {
                 currentFolder = toolsFolder;
                 modelParrent = "minecraft:item/handheld";
-            } else if (i < 8) {
+            } else if (i <= 9) {
                 currentFolder = armorFolder;
                 modelParrent = "minecraft:item/generated";
             } else {
@@ -33,18 +31,14 @@ public class ItemModelBuilder implements ISBConstants {
 
             textureMap.put("layer0", namespace + currentFolder + material + itemType[i]);
             mainMap.put("parent", modelParrent);
-            if (i < 9)
+            if (i <= 9)
                 mainMap.put("textures", textureMap);
             else
                 mainMap.remove("textures");
 
-            File directory = new File(path + "\\models\\item");
+            File directory = new File(path + "\\models\\item\\");
             if (!directory.exists()) {
-                try {
-                    Files.createDirectories(Paths.get(directory.toString()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                directory.mkdirs();
             }
             new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
         }

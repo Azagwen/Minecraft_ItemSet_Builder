@@ -8,13 +8,10 @@ public interface ISBConstants {
     JTextField matTextBox = new HintTextField("Material");
     JTextField namespaceTextBox = new HintTextField("Mod namespace");
     JTextField typeTextBox = new HintTextField("Ingredient type (ex: ingot)");
-    JTextField toolTextBox = new JTextField();
-    JTextField armorTextBox = new JTextField();
-    JTextField blockTextBox = new JTextField();
-    JLabel texLabel = new JLabel("Texture folders");
-    JLabel toolLabel = new JLabel("Tools :");
-    JLabel armorLabel = new JLabel("Armor items :");
-    JLabel blockLabel = new JLabel("Blocks :");
+    JTextField toolTextBox = new HintTextField("Tools");
+    JTextField armorTextBox = new HintTextField("Armor items");
+    JTextField blockTextBox = new HintTextField("Blocks");
+    JLabel texLabel = new JLabel("Texture folders: ");
 
     String namespace = (namespaceTextBox.getText().equals("") ? "minecraft" : namespaceTextBox.getText().toLowerCase()) + ":";
     String toolsFolder = (toolTextBox.getText().equals("") ? "item" : toolTextBox.getText().toLowerCase()) + "/";
@@ -27,13 +24,16 @@ public interface ISBConstants {
             "_pickaxe",
             "_axe",
             "_sword",
+
+            "_ingot",
             "_helmet",
             "_chestplate",
             "_leggings",
             "_boots",
+
             "_block",
             "_ore"
-    };      //10 elements (0-10)
+    };
 
     Color ISB_red = new Color(192, 64, 64);
     Color ISB_yellow = new Color(192, 192, 64);

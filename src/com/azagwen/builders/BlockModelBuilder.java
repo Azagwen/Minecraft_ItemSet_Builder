@@ -5,9 +5,6 @@ import com.azagwen.ISBFileWriter;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class BlockModelBuilder implements ISBConstants {
 
@@ -19,18 +16,14 @@ public class BlockModelBuilder implements ISBConstants {
         for (int i = 0; i < itemType.length; i++) {
             String modelParrent = "minecraft:cube_all";
 
-            if (i > 8) {
+            if (i > 9) {
                 textureMap.put("all", namespace + blocksFolder + material + itemType[i]);
                 mainMap.put("parent", modelParrent);
                 mainMap.put("textures", textureMap);
 
-                File directory = new File(path + "\\models\\block");
+                File directory = new File(path + "\\models\\block\\");
                 if (!directory.exists()) {
-                    try {
-                        Files.createDirectories(Paths.get(directory.toString()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    directory.mkdirs();
                 }
                 new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
             }

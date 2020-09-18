@@ -1,6 +1,6 @@
-# Minecraft_ItemSet_Builder
+# Minecraft ItemSet Builder
 
-Application that creates recipes and item models for Minecraft 1.16.X mods
+Application that creates item models, block models, blockstates, recipes and loot tables for a given ore in Minecraft 1.16.X mods
 
 #### The app will ask for :
 
