@@ -79,7 +79,7 @@ public class RecipeDataBuilder implements ISBConstants {
         axe.put("MS");
         axe.put(" S");
         sword.put("M");
-        sword.put("S");
+        sword.put("M");
         sword.put("S");
 
         helmet.put("MMM");
