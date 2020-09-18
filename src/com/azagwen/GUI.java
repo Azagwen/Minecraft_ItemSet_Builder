@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GUI implements ISBConstants {
-    private String version = "1.2.3";
+    private String version = "1.2.5";
     private JFrame frame = new JFrame("Minecraft Item Set Builder - V" + version);
     private JButton pathButton = new JButton("Select output Folder");
     private String selectedDirectory = "";
