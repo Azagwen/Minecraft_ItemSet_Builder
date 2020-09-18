@@ -29,10 +29,10 @@ public class GUI implements ISBConstants {
         JTextField[] textFields = {matTextBox, namespaceTextBox, typeTextBox, toolTextBox, armorTextBox, blockTextBox};
         JLabel[] labels = {texLabel};
 
-        for (int i = 0; i < textFields.length; i++) {
-            textFields[i].setFont(font);
-            textFields[i].setMargin(new Insets(0, 20, 0, 0));
-            textFields[i].addKeyListener(lengthLimit(20, textFields[i]));
+        for (JTextField textField : textFields) {
+            textField.setFont(font);
+            textField.setMargin(new Insets(0, 20, 0, 0));
+            textField.addKeyListener(lengthLimit(20, textField));
         }
         for (JLabel label : labels) {
             label.setFont(font);
