@@ -49,8 +49,16 @@ public class RecipeDataBuilder implements ISBConstants {
                 directory.mkdirs();
             }
 
-            if (i != 11 && i != 5)
-                new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+            if (i != 11 && i != 5) {
+                if (!makeBlockModels.isSelected()) {
+                    if (i != 10) {
+                        new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+                    }
+                }
+                else {
+                    new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+                }
+            }
         }
     }
 

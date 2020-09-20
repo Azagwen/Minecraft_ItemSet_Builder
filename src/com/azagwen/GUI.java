@@ -3,7 +3,6 @@ package com.azagwen;
 import com.azagwen.builders.*;
 
 import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GUI implements ISBConstants {
-    private String version = "1.3.0";
+    private String version = "1.3.2";
     private JFrame frame = new JFrame("Minecraft Item Set Builder - V" + version);
     private JButton pathButton = new JButton("Select output Folder");
     private String selectedDirectory = "";
@@ -47,8 +46,14 @@ public class GUI implements ISBConstants {
             checkBox.setFont(font);
         }
 
-        pathButton.addActionListener(new SelectPath());
+        pathButton.addActionListener(new SelectPathAction());
         buildButton.addActionListener(new BuildAction());
+
+        makeItemModels.addActionListener(new ToggleItemsAction());
+        makeBlockModels.addActionListener(new ToggleBlocksAction());
+        makeLootTables.addActionListener(new ToggleLootTablesAction());
+        makeRecipes.addActionListener(new ToggleRecipesAction());
+
         console.setEditable(false);
         console.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -81,7 +86,6 @@ public class GUI implements ISBConstants {
         panel.add(makeRecipes, assignConstraint(1, 10, 1, 1, 0, new Insets(0, 5, 5, 20)));
         panel.add(makeBlockModels, assignConstraint(0, 11, 1, 1, 0, new Insets(0, 20, 5, 5)));
         panel.add(makeLootTables, assignConstraint(1, 11, 1, 1, 0, new Insets(0, 5, 5, 20)));
-
         panel.add(buildButton, assignConstraint(0, 12, 2, 1, 0, new Insets(0, 20, 5, 20)));
         panel.add(console, assignConstraint(0, 13, 2, 1, 0, new Insets(0, 20, 20, 20)));
 
@@ -138,16 +142,19 @@ public class GUI implements ISBConstants {
                     String blocksFolder = (blockTextBox.getText().equals("") ? "block" : blockTextBox.getText().toLowerCase()) + "/";
                     String oreItemsFolder = (oreItemTextBox.getText().equals("") ? "item" : oreItemTextBox.getText().toLowerCase()) + "/";
 
-                    if (makeRecipes.isSelected())
+                    if (makeRecipes.isSelected()) {
                         new RecipeDataBuilder(directory.getAbsolutePath(), namespace);
-                    if (makeLootTables.isSelected())
+                    }
+                    if (makeLootTables.isSelected()) {
                         new LootTableBuilder(directory.getAbsolutePath(), namespace);
+                    }
                     if (makeBlockModels.isSelected()) {
                         new BlockstateBuilder(directory.getAbsolutePath(), namespace);
                         new BlockModelBuilder(directory.getAbsolutePath(), namespace, blocksFolder);
                     }
-                    if (makeItemModels.isSelected())
+                    if (makeItemModels.isSelected()) {
                         new ItemModelBuilder(directory.getAbsolutePath(), namespace, toolsFolder, armorFolder, blocksFolder, oreItemsFolder);
+                    }
                 } else {
                     console.setForeground(ISB_red);
                     console.setText("Please select an output directory.");
@@ -161,7 +168,7 @@ public class GUI implements ISBConstants {
         }
     }
 
-    private class SelectPath implements ActionListener {
+    private class SelectPathAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -172,6 +179,62 @@ public class GUI implements ISBConstants {
                 selectedDirectory = chooser.getSelectedFile().getAbsolutePath();
             }
             if (dialogEvent == JFileChooser.CANCEL_OPTION) {
+            }
+        }
+    }
+
+    private class ToggleItemsAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JToggleButton toggleButton = (JToggleButton) e.getSource();
+            boolean selected = toggleButton.isSelected();
+
+            toolTextBox.setEditable(selected);
+            armorTextBox.setEditable(selected);
+            oreItemTextBox.setEditable(selected);
+
+            if (!makeBlockModels.isSelected() && !makeLootTables.isSelected() && !makeRecipes.isSelected()) {
+                matTextBox.setEditable(selected);
+                namespaceTextBox.setEditable(selected);
+            }
+        }
+    }
+
+    private class ToggleBlocksAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JToggleButton toggleButton = (JToggleButton) e.getSource();
+            boolean selected = toggleButton.isSelected();
+
+            blockTextBox.setEditable(selected);
+
+            if (!makeItemModels.isSelected() && !makeLootTables.isSelected() && !makeRecipes.isSelected()) {
+                matTextBox.setEditable(selected);
+                namespaceTextBox.setEditable(selected);
+            }
+        }
+    }
+
+    private class ToggleRecipesAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JToggleButton toggleButton = (JToggleButton) e.getSource();
+            boolean selected = toggleButton.isSelected();
+
+            typeTextBox.setEditable(selected);
+
+            if (!makeItemModels.isSelected() && !makeBlockModels.isSelected() && !makeLootTables.isSelected()) {
+                matTextBox.setEditable(selected);
+                namespaceTextBox.setEditable(selected);
+            }
+        }
+    }
+
+    private class ToggleLootTablesAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JToggleButton toggleButton = (JToggleButton) e.getSource();
+            boolean selected = toggleButton.isSelected();
+
+            if (!makeItemModels.isSelected() && !makeBlockModels.isSelected() && !makeRecipes.isSelected()) {
+                matTextBox.setEditable(selected);
+                namespaceTextBox.setEditable(selected);
             }
         }
     }

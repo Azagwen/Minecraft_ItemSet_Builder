@@ -21,20 +21,20 @@ public interface ISBConstants {
     JLabel texLabel = new JLabel("Texture folders: ");
 
     String[] itemType = {
-            "_hoe",
-            "_shovel",
-            "_pickaxe",
-            "_axe",
-            "_sword",
+            "_hoe",         //0
+            "_shovel",      //1
+            "_pickaxe",     //2
+            "_axe",         //3
+            "_sword",       //4
 
-            "_ingot",
-            "_helmet",
-            "_chestplate",
-            "_leggings",
-            "_boots",
+            "_ingot",       //5
+            "_helmet",      //6
+            "_chestplate",  //7
+            "_leggings",    //8
+            "_boots",       //9
 
-            "_block",
-            "_ore"
+            "_block",       //10
+            "_ore"          //11
     };
 
     Color ISB_red = new Color(192, 64, 64);

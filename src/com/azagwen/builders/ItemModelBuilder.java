@@ -43,7 +43,14 @@ public class ItemModelBuilder implements ISBConstants {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+            if (!makeBlockModels.isSelected()) {
+                if (i != 10 && i != 11) {
+                    new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+                }
+            }
+            else {
+                new ISBFileWriter(directory.getAbsolutePath(), mainMap, itemType[i]);
+            }
         }
     }
 }
