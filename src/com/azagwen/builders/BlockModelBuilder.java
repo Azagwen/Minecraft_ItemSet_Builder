@@ -14,7 +14,7 @@ public class BlockModelBuilder implements ISBConstants {
         String material = matTextBox.getText().toLowerCase();
 
         for (int i = 0; i < itemType.length; i++) {
-            String modelParrent = "minecraft:cube_all";
+            String modelParrent = "minecraft:block/cube_all";
 
             if (i > 9) {
                 textureMap.put("all", namespace + blocksFolder + material + itemType[i]);

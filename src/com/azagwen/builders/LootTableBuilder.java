@@ -28,7 +28,7 @@ public class LootTableBuilder implements ISBConstants {
             JSONArray conditionsArray = new JSONArray();
 
             entryMap.put("type", "minecraft:item");
-            entryMap.put("name", namespace + "block/" + material + itemType[i]);
+            entryMap.put("name", namespace + material + itemType[i]);
             entriesArray.put(entryMap);
 
             conditionMap.put("condition", "minecraft:survives_explosion");

@@ -21,8 +21,8 @@ public class RecipeDataBuilder implements ISBConstants {
         String material = matTextBox.getText().toLowerCase();
         String type = "_" + typeTextBox.getText();
 
-        oreMap.put("M", namespace + material + (isFieldEmpty(typeTextBox) ? "" : type));
-        stickMap.put("S", "minecraft:stick");
+        oreMap.put("item", namespace + material + (isFieldEmpty(typeTextBox) ? "" : type));
+        stickMap.put("item", "minecraft:stick");
 
         makeObjOrdered(mainMap);
         makeObjOrdered(keyMap);
@@ -37,7 +37,7 @@ public class RecipeDataBuilder implements ISBConstants {
                 keyMap.remove("S");
             }
 
-            resultMap.put("Item", namespace + material + itemType[i]);
+            resultMap.put("item", namespace + material + itemType[i]);
 
             mainMap.put("type", "minecraft:crafting_shaped");
             mainMap.put("pattern", currentPattern);
